@@ -1,9 +1,10 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 body {
-  background-color: lightgray;
+  background-color:  rgb(250, 249, 245);
   margin: 0;
   font-family: 'Montserrat', sans-serif;
 }
@@ -11,15 +12,21 @@ body {
 header {
   margin: auto;
   text-align: center;
-  padding: 3rem 4rem;
+  padding: 0 1rem;
   padding-bottom: 0;
   width: 90%;
   background-color: white;
   color: rgb(80, 77, 77);
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: baseline;
 }
 
 input {
   display: block;
+  
 }
 
 #search {
@@ -39,25 +46,25 @@ main {
   width: 90%;
   margin: auto;
   background-color: white;
-  padding: 1px 4rem;
+  padding: 1px 1rem;
   padding-bottom: 3rem;
 }
 
 .country {
   border-radius: 2px;
-  height: 110px;
+  height: 6rem;
   font-family: 'Montserrat', sans-serif;
   color: #595959;
   margin: 10px 0;
   display: flex;
   justify-content: space-evenly;
-  background-color: rgb(213, 212, 211);
+  align-items: center;
+  background-color: rgb(247, 244, 235);
   max-height: fit-content;
-}
-
-.country-name {
   text-align: center;
 }
+
+
 
 .buttons {
   margin: 2rem 1rem;
@@ -66,7 +73,7 @@ main {
   display: inline-block;
   font-size: 1rem;
   border-radius: 2px;
-  background-color: rgb(191, 191, 182);
+  background-color: rgb(250, 249, 245);
   border: none;
   outline: none;
   color: white;
@@ -79,16 +86,21 @@ main {
 
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   color: rgb(80, 77, 77);
-  margin-bottom: 3rem;
-  margin-top: 0;
+  padding: 3rem 2rem 0;
   width: 100%;
+  text-align: left;
+  
 }
 
 h2 {
-  color: rgb(169, 169, 158);
+  color: #595959;;
   font-weight: normal;
+  font-size: 1.2rem;
+  padding: 1rem 2rem 3rem;
+  width: 100%;
+  text-align: left;
 }
 
 .isClicked {
@@ -111,18 +123,34 @@ h2 {
 }
 
 #legend {
-  color: #595959;
-  margin: 10px 0;
+  margin: 3rem 0 0;
   display: flex;
   justify-content: space-evenly;
-  max-height: fit-content;
-  font-size: .8rem;
+  height: fit-content;
+  font-size: .9rem;
+  width: 100%;
+}
+
+#legend_flag {
+  width: 19.5%;
 }
 
 .legend-span {
   width: 15%;
-  padding: 1rem;
-  text-align: left;
+  padding: 0 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:  rgb(247, 244, 235);
+  font-weight: bold;
+  color: #595959;
+  border: none;
+  outline: none;
+}
+
+.legend-span span {
+  padding-right: 8px;
 }
 
 #legend_country {
@@ -138,9 +166,6 @@ h2 {
   padding: .5rem;
 }
 
-#legend_flag {
-  width: 23%;
-}
 
 
 @media only screen and (max-width: 540px) {
@@ -157,6 +182,7 @@ h2 {
 
   h2 {
     font-size: 1.1rem;
+
   }
 
   .buttons {
