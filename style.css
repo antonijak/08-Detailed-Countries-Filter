@@ -12,6 +12,7 @@ header {
   margin: auto;
   text-align: center;
   padding: 3rem 4rem;
+  padding-bottom: 0;
   width: 90%;
   background-color: white;
   color: rgb(80, 77, 77);
@@ -121,6 +122,7 @@ h2 {
 .legend-span {
   width: 15%;
   padding: 1rem;
+  text-align: left;
 }
 
 #legend_country {

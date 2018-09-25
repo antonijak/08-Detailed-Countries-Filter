@@ -8,7 +8,6 @@ fetch(url)
     let total = document.querySelector('#total');
     let number = document.querySelector('#number');
     let expression = document.querySelector('#expression');
-    let lengthx;
 
     //when user types, matching coutries are generated
     const searchField = document.querySelector('#search');
@@ -29,15 +28,19 @@ fetch(url)
       const currencie = countriz[i].currencies.map(currencie => currencie.code);
       obj.currencie = currencie.join(', ');
       obj.population = countriz[i].population;
+      obj.population = obj.population.toString();
       obj.area = countriz[i].area;
+      if (obj.area !== null) {
+        obj.area = obj.area.toString();
+      } else {
+        obj.area = 'none'
+      }
       obj.flag = countriz[i].flag;
       countries[i] = obj;
     }
     //sets total number of countries on the page
     total.textContent = ` ${countries.length} `;
 
-    console.log(countries);
-    
     function createCountryDiv(country) {
       let colorDiv;
 
@@ -106,24 +109,22 @@ fetch(url)
       searchAnyBtn.className = 'isClicked';
       searchAnyBtn.className = 'buttons';
       let userInputUpper = document.querySelector('#search').value.toUpperCase();
-      let sucess = [];
-      countries.forEach((country) => {
-        let countryValues = Object.values(country);
-        countryValues.forEach((value) => {
-          if (typeof value === 'string') {
-            value = value.toUpperCase();
-            let done = 0;
-            if (value.includes(userInputUpper) && done === 0) {
-              createCountryDiv(country)
-              sucess.push(country)
-              done = 1
-            }
+      let result = countries.filter((countryObj) => {
+        for (let key in countryObj) {
+          if (countryObj[key].toUpperCase().includes(userInputUpper)) {
+            return countryObj
           }
-        })
-      });
+        }
+      })
+
+      function sortByName(){ result.sort( (a, b) => a.name.localeCompare(b.name) )}
+      function sortByCapital(){ result.sort( (a, b) => a.capital.localeCompare(b.capital) )}
+      function sortByRegion(){ result.sort( (a, b) => a.region.localeCompare(b.region) )}
+      function sortByPopulation(){ result.sort( (a, b) => a.population - b.population )}
+      function sortByArea(){ result.sort( (a, b) => a.area - b.area )}
+      sortByArea()
+      result.forEach(country => createCountryDiv(country))
+      number.textContent = result.length
       expression.textContent = userInputUpper;
-      
-      console.log(sucess);
     }
-    
   })
