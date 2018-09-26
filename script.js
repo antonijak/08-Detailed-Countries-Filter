@@ -56,13 +56,14 @@ fetch(url)
       const region = document.createElement('span');
       createInnerDiv(region);
       const language = document.createElement('span');
-      createInnerDiv(language);
-      const currencies = document.createElement('span');
-      createInnerDiv(currencies);
       const population = document.createElement('span');
       createInnerDiv(population);
       const area = document.createElement('span');
       createInnerDiv(area);
+      createInnerDiv(language);
+      const currencies = document.createElement('span');
+      createInnerDiv(currencies);
+      
       const flag = new Image();
       createInnerDiv(flag);
       main.appendChild(colorDiv);
@@ -98,8 +99,10 @@ fetch(url)
       }
       population.style.fontWeight = 'bold';
       flag.src = country.flag;
+      flag.style.width = '15%';
+      flag.style.height = '100%';
       flag.className = 'flag';
-      flag.style.height = '90%';
+      
     }
 
     function searchByAny() {
@@ -126,6 +129,7 @@ fetch(url)
           countrie_s.textContent = 'country'
         }
       }
+      
       grammar()
       expression.textContent = userInputUpper;
 
