@@ -9,6 +9,9 @@ fetch(url)
     let number = document.querySelector('#number');
     let expression = document.querySelector('#expression');
     let countrie_s = document.querySelector('#countrie-s');
+    let verb = document.querySelector('#verb');
+    let startContain = document.querySelector('#start-contain');
+    let lengthx;
 
     //when user types, matching coutries are generated
     const searchField = document.querySelector('#search');
@@ -24,6 +27,14 @@ fetch(url)
       obj.language = languages.join(', ');
       countriz[i].languages.map(lang => lang.name);
       const currencie = countriz[i].currencies.map(currencie => currencie.code);
+      console.log(currencie);
+      
+      for (let i = 0; i < currencie.length; i++) {
+        if (currencie[i] === '' || currencie[i] === null || currencie[i] === '(none)') {
+          currencie.splice(i, 1)
+        }
+      }
+      console.log(currencie);
       obj.currencie = currencie.join(', ');
       obj.population = countriz[i].population;
       obj.population = obj.population.toString();
@@ -31,7 +42,7 @@ fetch(url)
       if (obj.area !== null) {
         obj.area = obj.area.toString();
       } else {
-        obj.area = 'none'
+        obj.area = '-'
       }
       obj.flag = countriz[i].flag;
       countries[i] = obj;
@@ -63,7 +74,7 @@ fetch(url)
       createInnerDiv(language);
       const currencies = document.createElement('span');
       createInnerDiv(currencies);
-      
+
       const flag = new Image();
       createInnerDiv(flag);
       main.appendChild(colorDiv);
@@ -104,7 +115,7 @@ fetch(url)
       flag.style.width = '15%';
       flag.style.height = '100%';
       flag.className = 'flag';
-      
+
     }
 
     function searchByAny() {
@@ -119,11 +130,14 @@ fetch(url)
         }
       })
 
-      result.forEach(country => createCountryDiv(country))
-      function grammar (){
-        lengthx = result.length
-        number.textContent = lengthx
-        if (lengthx > 1 || lengthx === 0){
+      result.forEach(country => createCountryDiv(country));
+      lengthx = result.length;
+      expression.textContent = userInputUpper;
+
+      function grammar(wantedVerb) {
+        number.textContent = lengthx;
+        startContain.textContent = wantedVerb;
+        if (lengthx > 1 || lengthx === 0) {
           verb.textContent = 'are'
           countrie_s.textContent = 'countries'
         } else {
@@ -131,9 +145,8 @@ fetch(url)
           countrie_s.textContent = 'country'
         }
       }
-      
-      grammar()
-      expression.textContent = userInputUpper;
+
+      grammar('containing')
 
       const byName = document.querySelector("#legend_country");
       byName.addEventListener('click', sortByNameAsc);
@@ -146,7 +159,7 @@ fetch(url)
       const byArea = document.querySelector("#legend_area");
       byArea.addEventListener('click', sortByAreaAsc);
 
-    
+
 
       function sortByNameAsc() {
         const icon = document.querySelector('#country');
@@ -166,7 +179,7 @@ fetch(url)
         result.forEach(country => createCountryDiv(country));
         byCapital.removeEventListener('click', sortByCapitalAsc);
         byCapital.addEventListener('click', sortByCapitalDesc);
-       
+
       }
 
       function sortByRegionAsc() {
@@ -250,8 +263,8 @@ fetch(url)
         byArea.removeEventListener('click', sortByAreaDesc);
         byArea.addEventListener('click', sortByAreaAsc);
       }
-      
+
     }
-    searchByAny() 
-    
+    searchByAny()
+
   })
