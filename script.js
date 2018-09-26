@@ -72,6 +72,8 @@ fetch(url)
       name.textContent = country.name;
       name.style.fontWeight = 'bold';
       name.style.width = '20%';
+      name.style.textAlign = 'left';
+      name.style.paddingLeft = '1rem';
       capital.textContent = country.capital;
       area.textContent = country.area;
       region.textContent = country.region;
