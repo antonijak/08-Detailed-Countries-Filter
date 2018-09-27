@@ -6,7 +6,12 @@
 
 body {
   background-color:  rgb(250, 248, 248);
-  margin: 0;
+}
+
+#wrapper {
+  max-width: 1450px;
+  background-color:  rgb(250, 248, 248);
+  margin: auto;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -122,6 +127,12 @@ p {
 ion-icon {
   font-size: 1rem;
   color: rgb(105, 201, 242);
+  padding-left: .7rem;
+}
+
+
+ion-icon:hover{
+ cursor: pointer;
 }
 
 main {
@@ -149,8 +160,8 @@ main {
 
 .child {
   padding-left: 1rem;
+  font-size: 16px;
 }
-
 
 .flag {
   display: flex;

@@ -91,7 +91,7 @@ fetch(url)
         language.style.fontSize = '.8rem';
       } else if (language.textContent.length > 30) {
         language.style.fontSize = '.9rem';
-      }
+      } 
       currencies.textContent = country.currencie;
       if (currencies.textContent.length > 50) {
         currencies.style.fontSize = '.7rem';
