@@ -6,29 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Detailed Countries Filter</title>
 </head>
 
 <body>
   <header>
-    <h1>WORLD COUNTRIES LIST</h1>
-    <input type="text" placeholder="Search by..." id="search">
-    <h2>There <span id="verb" >are</span><span id="total"></span> <span id="number"></span> <span id="countrie-s">countries</span> <span id="start-contain"></span> <span id="expression"></span><span id="dot"></span> </span></h2>
+    <div id="searc">
+    <ion-icon name="search" id="magnify"></ion-icon>
+    <input type="text" placeholder="search" id="search">
+  </div>
+    <p>There <span id="verb" >are</span><span id="total"></span> <span id="number"></span> <span id="countrie-s">countries</span> <span id="start-contain"></span> <span id="expression"></span><span id="dot"></span> </span></p>
+    <div id="container">
     <div id="legend">
-        <button class="legend-span" id="legend_country"><span>COUNTRY</span>  <img src="./assets/down.svg" alt="down" height="22" width="15" id="country"></button>
-        <button class="legend-span" id="legend_capital"><span>CAPITAL</span> <img src="./assets/down.svg" alt="down" height="22" width="15" id="capital"></button>
-        <button class="legend-span"id="legend_region"><span>REGION</span>  <img src="./assets/down.svg" alt="down" height="22" width="15" id="region"></button>
-        <button class="legend-span" id="legend_population"><span>POPULATION</span>  <img src="./assets/down.svg" alt="down" height="22" width="15" id="population"></button>
-        <button class="legend-span" id="legend_area"><span>AREA </span> <img src="./assets/down.svg" alt="down" height="22" width="15" id="area"></button>
+
+        <button class="legend-span" id="legend_flag"><span>FLAG</span> </button>
+        <button class="legend-span" id="legend_country"><span>COUNTRY</span>  <ion-icon name="arrow-round-up" id="countryI"></ion-icon></button>
+        <button class="legend-span" id="legend_capital"><span>CAPITAL</span> <ion-icon name="arrow-round-down" id="capitalI"></ion-icon></button>
+        <button class="legend-span"id="legend_region"><span>REGION</span> <ion-icon name="arrow-round-down" id="regionI"></ion-icon></button>
+        <button class="legend-span" id="legend_population"><span>POPULATION</span> <ion-icon name="arrow-round-down" id="populationI"></ion-icon></button>
+        <button class="legend-span" id="legend_area"><span>AREA </span> <ion-icon name="arrow-round-down" id="areaI"></ion-icon></button>
+        <button class="legend-span" id="legend_currency"><span>CURRENCY</span> </button>
         <button class="legend-span" id="legend_languages"><span>LANGUAGES</span>  </button>
-        <button class="legend-span" id="legend_currency">CURRENCY</button>
-        
-        <button class="legend-span" id="legend_flag">FLAG</button>
       </div>
+    </div>
   </header>
   <main>
   </main>
+  <script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
   <script src="./script.js"></script>
 </body>
 

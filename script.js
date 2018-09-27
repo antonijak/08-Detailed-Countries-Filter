@@ -12,8 +12,6 @@ fetch(url)
     let verb = document.querySelector('#verb');
     let startContain = document.querySelector('#start-contain');
     let lengthx;
-
-    //when user types, matching coutries are generated
     const searchField = document.querySelector('#search');
     searchField.addEventListener('input', searchByAny)
 
@@ -27,14 +25,12 @@ fetch(url)
       obj.language = languages.join(', ');
       countriz[i].languages.map(lang => lang.name);
       const currencie = countriz[i].currencies.map(currencie => currencie.code);
-      console.log(currencie);
-      
+
       for (let i = 0; i < currencie.length; i++) {
         if (currencie[i] === '' || currencie[i] === null || currencie[i] === '(none)') {
           currencie.splice(i, 1)
         }
       }
-      console.log(currencie);
       obj.currencie = currencie.join(', ');
       obj.population = countriz[i].population;
       obj.population = obj.population.toString();
@@ -59,32 +55,30 @@ fetch(url)
         inner.className = 'child';
       }
       colorDiv = document.createElement('div');
-      const countryName = document.createElement('div');
+      const flag = document.createElement('span'); 
+      createInnerDiv(flag);
+      const image = new Image()
+      image.className = 'child';
+      flag.appendChild(image);
       const name = document.createElement('span');
       createInnerDiv(name);
       const capital = document.createElement('span');
       createInnerDiv(capital);
       const region = document.createElement('span');
       createInnerDiv(region);
-      const language = document.createElement('span');
       const population = document.createElement('span');
       createInnerDiv(population);
       const area = document.createElement('span');
       createInnerDiv(area);
-      createInnerDiv(language);
       const currencies = document.createElement('span');
       createInnerDiv(currencies);
-
-      const flag = new Image();
-      createInnerDiv(flag);
+      const language = document.createElement('span');
+      createInnerDiv(language);
       main.appendChild(colorDiv);
       colorDiv.className = 'country';
-      countryName.className = 'country-name';
       name.textContent = country.name;
       name.style.fontWeight = 'bold';
-      name.style.width = '20%';
       name.style.textAlign = 'left';
-      name.style.paddingLeft = '1rem';
       capital.textContent = country.capital;
       area.textContent = country.area;
       region.textContent = country.region;
@@ -110,18 +104,16 @@ fetch(url)
       if (country.population > 100000000) {
         population.style.color = 'red';
       }
-      population.style.fontWeight = 'bold';
-      flag.src = country.flag;
+      image.src = country.flag;
       flag.style.width = '15%';
       flag.style.height = '100%';
       flag.className = 'flag';
-
     }
 
     function searchByAny() {
       main.innerHTML = '';
       total.textContent = '';
-      let userInputUpper = document.querySelector('#search').value.toUpperCase();
+      let userInputUpper = searchField.value.toUpperCase();
       let result = countries.filter((countryObj) => {
         for (let key in countryObj) {
           if (countryObj[key].toUpperCase().includes(userInputUpper)) {
@@ -132,24 +124,29 @@ fetch(url)
 
       result.forEach(country => createCountryDiv(country));
       lengthx = result.length;
-      expression.textContent = userInputUpper;
+      expression.textContent = userInputUpper.toLowerCase();
+      
 
       function grammar(wantedVerb) {
         number.textContent = lengthx;
-        startContain.textContent = wantedVerb;
+        
         if (lengthx > 1 || lengthx === 0) {
-          verb.textContent = 'are'
-          countrie_s.textContent = 'countries'
+          startContain.textContent = wantedVerb;
+          verb.textContent = 'are';
+          countrie_s.textContent = 'countries';
+          console.log('bla');
+          
         } else {
-          verb.textContent = 'is'
-          countrie_s.textContent = 'country'
+          verb.textContent = 'is';
+          countrie_s.textContent = 'country';
+          startContain.textContent = wantedVerb;
         }
       }
 
       grammar('containing')
 
       const byName = document.querySelector("#legend_country");
-      byName.addEventListener('click', sortByNameAsc);
+      byName.addEventListener('click', sortByNameDesc);
       const byCapital = document.querySelector("#legend_capital");
       byCapital.addEventListener('click', sortByCapitalAsc);
       const byRegion = document.querySelector("#legend_region");
@@ -160,10 +157,10 @@ fetch(url)
       byArea.addEventListener('click', sortByAreaAsc);
 
 
-
+ 
       function sortByNameAsc() {
-        const icon = document.querySelector('#country');
-        icon.src = './assets/up.svg';
+        const icon = document.querySelector('#countryI');
+        icon.name = 'arrow-round-up';
         main.innerHTML = '';
         result.sort((a, b) => a.name.localeCompare(b.name));
         result.forEach(country => createCountryDiv(country));
@@ -172,8 +169,8 @@ fetch(url)
       }
 
       function sortByCapitalAsc() {
-        const icon = document.querySelector('#capital');
-        icon.src = './assets/up.svg';
+        const icon = document.querySelector('#capitalI');
+        icon.name = 'arrow-round-up';
         main.innerHTML = '';
         result.sort((a, b) => a.capital.localeCompare(b.capital));
         result.forEach(country => createCountryDiv(country));
@@ -183,8 +180,8 @@ fetch(url)
       }
 
       function sortByRegionAsc() {
-        const icon = document.querySelector('#region');
-        icon.src = './assets/up.svg';
+        const icon = document.querySelector('#regionI');
+        icon.name = 'arrow-round-up';
         main.innerHTML = '';
         result.sort((a, b) => a.region.localeCompare(b.region));
         result.forEach(country => createCountryDiv(country));
@@ -193,8 +190,8 @@ fetch(url)
       }
 
       function sortByPopulationAsc() {
-        const icon = document.querySelector('#population');
-        icon.src = './assets/up.svg';
+        const icon = document.querySelector('#populationI');
+        icon.name = 'arrow-round-up';
         main.innerHTML = '';
         result.sort((a, b) => a.population - b.population);
         result.forEach(country => createCountryDiv(country));
@@ -203,8 +200,8 @@ fetch(url)
       }
 
       function sortByAreaAsc() {
-        const icon = document.querySelector('#area');
-        icon.src = './assets/up.svg';
+        const icon = document.querySelector('#areaI');
+        icon.name = 'arrow-round-up';
         main.innerHTML = '';
         result.sort((a, b) => a.area - b.area);
         result.forEach(country => createCountryDiv(country));
@@ -215,8 +212,8 @@ fetch(url)
       //sorting in descending order
 
       function sortByNameDesc() {
-        const icon = document.querySelector('#country');
-        icon.src = './assets/down.svg';
+        const icon = document.querySelector('#countryI');
+        icon.name = 'arrow-round-down';
         main.innerHTML = '';
         result.sort((a, b) => b.name.localeCompare(a.name));
         result.forEach(country => createCountryDiv(country));
@@ -225,8 +222,8 @@ fetch(url)
       }
 
       function sortByCapitalDesc() {
-        const icon = document.querySelector('#capital');
-        icon.src = './assets/down.svg';
+        const icon = document.querySelector('#capitalI');
+        icon.name = 'arrow-round-down';
         main.innerHTML = '';
         result.sort((a, b) => b.capital.localeCompare(a.capital));
         result.forEach(country => createCountryDiv(country));
@@ -235,8 +232,8 @@ fetch(url)
       }
 
       function sortByRegionDesc() {
-        const icon = document.querySelector('#region');
-        icon.src = './assets/down.svg';
+        const icon = document.querySelector('#regionI');
+        icon.name = 'arrow-round-down';
         main.innerHTML = '';
         result.sort((a, b) => b.region.localeCompare(a.region));
         result.forEach(country => createCountryDiv(country));
@@ -245,8 +242,8 @@ fetch(url)
       }
 
       function sortByPopulationDesc() {
-        const icon = document.querySelector('#population');
-        icon.src = './assets/down.svg';
+        const icon = document.querySelector('#populationI');
+        icon.name = 'arrow-round-down';
         main.innerHTML = '';
         result.sort((a, b) => b.population - a.population);
         result.forEach(country => createCountryDiv(country));
@@ -255,8 +252,8 @@ fetch(url)
       }
 
       function sortByAreaDesc() {
-        const icon = document.querySelector('#area');
-        icon.src = './assets/down.svg';
+        const icon = document.querySelector('#areaI');
+        icon.name = 'arrow-round-down';
         main.innerHTML = '';
         result.sort((a, b) => b.area - a.area);
         result.forEach(country => createCountryDiv(country));
@@ -264,7 +261,9 @@ fetch(url)
         byArea.addEventListener('click', sortByAreaAsc);
       }
 
-    }
-    searchByAny()
+  }
+
+  searchByAny()
+  startContain.textContent = '';
 
   })
