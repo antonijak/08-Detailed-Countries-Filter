@@ -3,7 +3,7 @@ const url = 'https://restcountries.eu/rest/v2/all';
 fetch(url)
   .then(response => response.json())
   .then(countriz => {
-    let countries = [];
+
     let main = document.querySelector('main');
     let total = document.querySelector('#total');
     let number = document.querySelector('#number');
@@ -11,138 +11,175 @@ fetch(url)
     let countrie_s = document.querySelector('#countrie-s');
     let verb = document.querySelector('#verb');
     let startContain = document.querySelector('#start-contain');
-    let lengthx;
     const searchField = document.querySelector('#search');
     searchField.addEventListener('input', searchByAny)
+    let lengthx;
 
-    // makes an array with objects containing data that we want
-    for (let i = 0; i < countriz.length; i++) {
-      let obj = {};
-      obj.name = countriz[i].name;
-      obj.capital = countriz[i].capital;
-      obj.region = countriz[i].region;
-      const languages = countriz[i].languages.map(lang => lang.name);
-      obj.language = languages.join(', ');
-      countriz[i].languages.map(lang => lang.name);
-      const currencie = countriz[i].currencies.map(currencie => currencie.code);
+    function makeNotEmpty(element) {
+      if (element.innerHTML === '') {
+        element.innerHTML = '-';
+      }
+    }
 
-      for (let i = 0; i < currencie.length; i++) {
-        if (currencie[i] === '' || currencie[i] === null || currencie[i] === '(none)') {
-          currencie.splice(i, 1)
+    function clearEmptyValues(array) {
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === '' || array[i] === null || array[i] === '(none)') {
+          array.splice(i, 1)
         }
       }
-      obj.currencie = currencie.join(', ');
-      obj.population = countriz[i].population;
-      obj.population = obj.population.toString();
-      obj.area = countriz[i].area;
-      if (obj.area !== null) {
-        obj.area = obj.area.toString();
-      } else {
-        obj.area = '-'
-      }
-      obj.flag = countriz[i].flag;
-      countries[i] = obj;
     }
-    //sets total number of countries on the page
-    total.textContent = ` ${countries.length} `;
+
+    function letterSize(p) {
+      if (p.textContent.length > 70) {
+        p.style.fontSize = '.6rem';
+      } else if (p.textContent.length > 50) {
+        p.style.fontSize = '.7rem';
+      } else if (p.textContent.length > 40) {
+        p.style.fontSize = '.8rem';
+      } else if (p.textContent.length > 30) {
+        p.style.fontSize = '.9rem';
+      }
+    }
+
+    function createChild(parent, child) {
+      parent.appendChild(child);
+      child.style.width = '15%';
+      child.className = 'child';
+    }
+
+    function createWantedCountriesArray(array) {
+      let newCountriesArray = [];
+      for (let i = 0; i < array.length; i++) {
+        //country
+        let obj = {};
+        //country name
+        obj.name = array[i].name;
+        //country capital
+        obj.capital = array[i].capital;
+        //country region
+        obj.region = array[i].region;
+        //country languages
+        const languages = array[i].languages
+          .map(lang => lang.name);
+        obj.language = languages.join(', ');
+        //country currencie
+        const currencie = array[i].currencies
+          .map(currencie => currencie.code);
+        clearEmptyValues(currencie);
+        obj.currencie = currencie.join(', ');
+        //country population
+        obj.population = array[i].population;
+        obj.population = obj.population.toString();
+        //country area
+        obj.area = obj.population.toString();
+        obj.area = array[i].area;
+        if (obj.area !== null) {
+          obj.area = obj.area.toString();
+        } else {
+          obj.area = '-';
+        }
+        //country flag
+        obj.flag = array[i].flag;
+
+        //put country in the new array
+        newCountriesArray[i] = obj;
+      }
+      return newCountriesArray
+    }
 
     function createCountryDiv(country) {
-      let colorDiv;
-
-      function createInnerDiv(inner) {
-        colorDiv.appendChild(inner);
-        inner.style.width = '15%';
-        inner.className = 'child';
-      }
-      colorDiv = document.createElement('div');
-      const flag = document.createElement('span'); 
-      createInnerDiv(flag);
+      //create country div
+      let countryDiv = document.createElement('div');
+      main.appendChild(countryDiv);
+      countryDiv.className = 'country';
+      //create country children
+      const flag = document.createElement('span');
+      createChild(countryDiv, flag);
+      const name = document.createElement('span');
+      createChild(countryDiv, name);
+      const capital = document.createElement('span');
+      createChild(countryDiv, capital);
+      const region = document.createElement('span');
+      createChild(countryDiv, region);
+      const population = document.createElement('span');
+      createChild(countryDiv, population);
+      const area = document.createElement('span');
+      createChild(countryDiv, area);
+      const currencies = document.createElement('span');
+      createChild(countryDiv, currencies);
+      const language = document.createElement('span');
+      createChild(countryDiv, language);
+      ////set attributes for children--
+      //flag
       const image = new Image()
       image.className = 'child';
       flag.appendChild(image);
-      const name = document.createElement('span');
-      createInnerDiv(name);
-      const capital = document.createElement('span');
-      createInnerDiv(capital);
-      const region = document.createElement('span');
-      createInnerDiv(region);
-      const population = document.createElement('span');
-      createInnerDiv(population);
-      const area = document.createElement('span');
-      createInnerDiv(area);
-      const currencies = document.createElement('span');
-      createInnerDiv(currencies);
-      const language = document.createElement('span');
-      createInnerDiv(language);
-      main.appendChild(colorDiv);
-      colorDiv.className = 'country';
-      name.textContent = country.name;
-      name.style.fontWeight = 'bold';
-      name.style.textAlign = 'left';
-      capital.textContent = country.capital;
-      area.textContent = country.area;
-      region.textContent = country.region;
-      language.textContent = country.language;
-      if (language.textContent.length > 70) {
-        language.style.fontSize = '.6rem';
-      } else if (language.textContent.length > 50) {
-        language.style.fontSize = '.7rem';
-      } else if (language.textContent.length > 40) {
-        language.style.fontSize = '.8rem';
-      } else if (language.textContent.length > 30) {
-        language.style.fontSize = '.9rem';
-      } 
-      currencies.textContent = country.currencie;
-      if (currencies.textContent.length > 50) {
-        currencies.style.fontSize = '.7rem';
-      } else if (language.textContent.length > 40) {
-        currencies.style.fontSize = '.8rem';
-      } else if (language.textContent.length > 30) {
-        currencies.style.fontSize = '.9rem';
-      }
-      population.textContent = country.population;
-      if (country.population > 100000000) {
-        population.style.color = 'red';
-      }
       image.src = country.flag;
       flag.style.width = '15%';
       flag.style.height = '100%';
       flag.className = 'flag';
+      // country name
+      name.textContent = country.name;
+      name.style.fontWeight = 'bold';
+      name.style.textAlign = 'left';
+      letterSize(name)
+      //capital
+      capital.textContent = country.capital;
+      makeNotEmpty(capital)
+      //area
+      area.textContent = country.area;
+      makeNotEmpty(area)
+      //region
+      region.textContent = country.region;
+      makeNotEmpty(region)
+      //language
+      language.textContent = country.language;
+      letterSize(language)
+      //currencies
+      currencies.textContent = country.currencie;
+      letterSize(currencies)
+      makeNotEmpty(currencies)
+      //population
+      population.textContent = country.population;
+      if (country.population > 100000000) {
+        population.style.color = 'red';
+      }
     }
+
+    function grammar(wantedVerb) {
+      number.textContent = lengthx;
+      startContain.textContent = wantedVerb;
+      if (lengthx > 1 || lengthx === 0) {
+        verb.textContent = 'are';
+        countrie_s.textContent = 'countries';
+      } else {
+        verb.textContent = 'is';
+        countrie_s.textContent = 'country';
+      }
+    }
+
+    
 
     function searchByAny() {
       main.innerHTML = '';
       total.textContent = '';
       let userInputUpper = searchField.value.toUpperCase();
-      let result = countries.filter((countryObj) => {
-        for (let key in countryObj) {
-          if (countryObj[key].toUpperCase().includes(userInputUpper)) {
-            return countryObj
+      //get an array of coutries we want
+      let result = createWantedCountriesArray(countriz)
+        .filter((country) => {
+          for (let key in country) {
+            if (country[key].toUpperCase().includes(userInputUpper)) {
+              return country
+            }
           }
-        }
-      })
-
+        })
+        
+      //display it in the DOM
       result.forEach(country => createCountryDiv(country));
+
+
       lengthx = result.length;
       expression.textContent = userInputUpper.toLowerCase();
-      
-
-      function grammar(wantedVerb) {
-        number.textContent = lengthx;
-        
-        if (lengthx > 1 || lengthx === 0) {
-          startContain.textContent = wantedVerb;
-          verb.textContent = 'are';
-          countrie_s.textContent = 'countries';
-          console.log('bla');
-          
-        } else {
-          verb.textContent = 'is';
-          countrie_s.textContent = 'country';
-          startContain.textContent = wantedVerb;
-        }
-      }
-
       grammar('containing')
 
       const byName = document.querySelector("#legend_country");
@@ -156,8 +193,6 @@ fetch(url)
       const byArea = document.querySelector("#legend_area");
       byArea.addEventListener('click', sortByAreaAsc);
 
-
- 
       function sortByNameAsc() {
         const icon = document.querySelector('#countryI');
         icon.name = 'arrow-round-up';
@@ -261,9 +296,16 @@ fetch(url)
         byArea.addEventListener('click', sortByAreaAsc);
       }
 
-  }
 
-  searchByAny()
-  startContain.textContent = '';
 
+      //if user deletes search word 'containing' dissapears
+      if (userInputUpper === '') {
+        startContain.textContent = '';
+      }
+    }
+
+
+
+    searchByAny()
+    startContain.textContent = '';
   })

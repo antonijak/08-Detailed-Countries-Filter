@@ -131,7 +131,7 @@ ion-icon {
 }
 
 
-ion-icon:hover{
+ion-icon:hover, .legend-span{
  cursor: pointer;
 }
 
@@ -176,6 +176,7 @@ main {
   width: 30%;
   padding: 0;
   border-radius: 3px;
+  border: 1px solid rgb(235, 234, 234);
 }
 
 @media only screen and (max-width: 540px) {
